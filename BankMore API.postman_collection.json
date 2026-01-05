@@ -1,0 +1,392 @@
+{
+	"info": {
+		"_postman_id": "3f669c35-269d-45ac-904b-0e8af78290c9",
+		"name": "BankMore API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33658478"
+	},
+	"item": [
+		{
+			"name": "ContaCorrente",
+			"item": [
+				{
+					"name": "Cadastrar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Idempotencia-Key",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"documento\": \"08857098977\",\r\n  \"nome\": \"Alcemir Jr 2\",\r\n  \"senha\": \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{contacorrente_base_url}}/Cadastrar",
+							"host": [
+								"{{contacorrente_base_url}}"
+							],
+							"path": [
+								"Cadastrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Inativar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idContaCorrente\": \"strASDASDADADAing\",\r\n  \"senha\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{contacorrente_base_url}}/Inativar",
+							"host": [
+								"{{contacorrente_base_url}}"
+							],
+							"path": [
+								"Inativar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Movimentar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Idempotencia-Key",
+								"value": "8970A2F9-1FF3-43E0-83EF-34C740D9BC62",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"numeroConta\": 1,\r\n  \"valor\": 500,\r\n  \"tipo\": \"C\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{contacorrente_base_url}}/Movimentar",
+							"host": [
+								"{{contacorrente_base_url}}"
+							],
+							"path": [
+								"Movimentar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ConsultaSaldo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Idempotencia-Key",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{contacorrente_base_url}}/ConsultaSaldo",
+							"host": [
+								"{{contacorrente_base_url}}"
+							],
+							"path": [
+								"ConsultaSaldo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ConsultaId",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Idempotencia-Key",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{contacorrente_base_url}}/ConsultaId?IdContaCorrente&numeroConta=3",
+							"host": [
+								"{{contacorrente_base_url}}"
+							],
+							"path": [
+								"ConsultaId"
+							],
+							"query": [
+								{
+									"key": "IdContaCorrente",
+									"value": null
+								},
+								{
+									"key": "numeroConta",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transferencia",
+			"item": [
+				{
+					"name": "TransferirInterno",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Idempotencia-Key",
+								"value": "18ee818b-53bf-44b2-8f8a-01bb6fe75b12",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"numeroContaDestino\": 2,\r\n  \"valor\": 12\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{transferencia_base_url}}/TransferirInterno",
+							"host": [
+								"{{transferencia_base_url}}"
+							],
+							"path": [
+								"TransferirInterno"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tarifa",
+			"item": [
+				{
+					"name": "Tarifar",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Idempotencia-Key",
+								"value": "11a2bd29-a791-4364-b480-b6531e723aqq",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idContaCorrete\": \"7f0e042d-22d3-4de1-a230-2abe75ab1159\",\r\n  \"dataMovimento\": \"03/01/2022\",\r\n  \"valor\": 12\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tarifa_base_url}}/Tarifar",
+							"host": [
+								"{{tarifa_base_url}}"
+							],
+							"path": [
+								"Tarifar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const token = pm.response.json().data.accessToken;\r",
+							"\r",
+							"pm.collectionVariables.set(\"token\", token);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Idempotencia-Key",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"numeroConta\": 1,\r\n  \"documento\": \"\",\r\n  \"senha\": \"123456789\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{login_url}}",
+					"host": [
+						"{{login_url}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Exemple",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"numeroConta\": 0,\r\n  \"documento\": \"12345678900\",\r\n  \"senha\": \"zxcasdqwe123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/Login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"Login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 03 Dec 2025 20:19:16 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "api-supported-versions",
+							"value": "1.0"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZENvbnRhQ29ycmVudGUiOiIwMmY0ZGI4Ny0yZGQ2LTRhYzItYmY3My05YmZjYjZiMWQxZDEiLCJqdGkiOiJhM2VkY2Q5Zi00ODQzLTQxNmQtODc5Ny0yZGE4ZmQ5MjM4MTMiLCJleHAiOjE3NjQ3OTQ5NTcsImlzcyI6IkJhbmtNb3JlIiwiYXVkIjoiQmFua01vcmUuY29tLmJyIn0.N-RRdZYG0PbQoMn9olPLSIkwiY7vlzkzDLkuyB7vINY\"\n    },\n    \"isSuccess\": true,\n    \"statusCode\": 200,\n    \"error\": null,\n    \"timestamp\": \"2025-12-03T17:19:17.8737254-03:00\"\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "login_url",
+			"value": ""
+		},
+		{
+			"key": "contacorrente_base_url",
+			"value": ""
+		},
+		{
+			"key": "transferencia_base_url",
+			"value": ""
+		},
+		{
+			"key": "tarifa_base_url",
+			"value": ""
+		},
+		{
+			"key": "token",
+			"value": ""
+		}
+	]
+}

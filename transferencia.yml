@@ -1,0 +1,20 @@
+services:
+  transferencia-api:
+    build:
+      context: .
+      dockerfile: ./Transferencia/Transferencia.Api/Dockerfile
+    container_name: transferencia-api
+    ports:
+      - "7772:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "8080"
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+    volumes:
+      - ./database:/app/data
+    networks:
+      - bankmore_network
+
+networks:
+  bankmore_network:
+    external: true

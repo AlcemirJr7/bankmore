@@ -1,0 +1,6 @@
+﻿namespace Core.Infrastructure.Idempotencia;
+
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+public sealed class SkipIdempotencyAttribute : Attribute
+{
+}
