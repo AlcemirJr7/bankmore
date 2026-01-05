@@ -1,4 +1,4 @@
-# bankmore
+# BankMore
 
 A análise da solução `BankMore` revela uma arquitetura bem estruturada, com forte adesão aos princípios SOLID e Clean Architecture, indicando um design maduro e focado em modularidade e manutenibilidade.
 
