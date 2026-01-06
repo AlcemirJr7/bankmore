@@ -9,5 +9,7 @@ public sealed class InativarRequest : IRequest<ApiResponse>
 {
     [TamanhoValido(AtributosDefinitions.DocumentoMaxLength)]
     public string IdContaCorrente { get; init; } = string.Empty;
+
+    [TamanhoValido(AtributosDefinitions.SenhaHashMaxLength)]
     public string Senha { get; init; } = string.Empty;
 }

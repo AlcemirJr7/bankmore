@@ -30,5 +30,7 @@ public static class ObjectExtensions
         return null;
     }
 
+    public static bool MaiorQueZero(this object? value) => value is null ? false : value.ToDecimalOrNull() > 0;
+
     public static string ToStr(this object? value) => value!.ToString() ?? string.Empty;
 }

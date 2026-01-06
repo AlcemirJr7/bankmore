@@ -15,8 +15,4 @@
     <ProjectReference Include="..\ContaCorrente.Domain\ContaCorrente.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Definitions\" />
-  </ItemGroup>
-
 </Project>

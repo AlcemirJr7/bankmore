@@ -12,5 +12,7 @@ public sealed class TarifarRequest : IRequest<ApiResponse>
 
     [DataValida]
     public string DataMovimento { get; set; } = string.Empty;
+
+    [ValorMaiorZero]
     public decimal Valor { get; set; }
 }

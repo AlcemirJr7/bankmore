@@ -1,4 +1,6 @@
-﻿using Core.Response;
+﻿using Core.Abstractions;
+using Core.Exceptions;
+using Core.Response;
 using Microsoft.AspNetCore.Http;
 using Serilog;
 using System.Text.Json;
@@ -30,6 +32,8 @@ public class ExceptionHandlingMiddleware
 
     private static Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
+        var response = default(ApiResponse);
+
         var statusCode = exception switch
         {
             InvalidOperationException => ApiStatusCode.BadRequest,
@@ -38,14 +42,13 @@ public class ExceptionHandlingMiddleware
             KeyNotFoundException => ApiStatusCode.NotFound,
             ArgumentNullException => ApiStatusCode.BadRequest,
             ArgumentException => ApiStatusCode.BadRequest,
+            UnauthorizedUserApiException => ApiStatusCode.Forbidden,
+            UnauthorizedApiException => ApiStatusCode.Unauthorized,
             _ => ApiStatusCode.InternalServerError
         };
 
-        var response = ApiResponse.Failure(new ErrorDetails(
-            exception.GetType().Name,
-            exception.Message,
-            statusCode));
-
+        response = CreateErrorResponse(exception, statusCode);
+    
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = statusCode;
 
@@ -55,5 +58,18 @@ public class ExceptionHandlingMiddleware
         };
 
         return context.Response.WriteAsync(JsonSerializer.Serialize(response, jsonOptions));
+    }
+
+    private static ApiResponse CreateErrorResponse(Exception exception, int statusCode)
+    {
+        if (exception is IExceptionApi<ErrorDetails> apiException)
+            return ApiResponse.Failure(apiException.ToError());
+
+        var errorDetails = new ErrorDetails(
+            exception.GetType().Name,
+            exception.Message,
+            statusCode);
+
+        return ApiResponse.Failure(errorDetails);
     }
 }

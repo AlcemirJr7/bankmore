@@ -10,7 +10,7 @@ public readonly record struct AuthErrors
             new("USER_UNAUTHORIZED", "Usuário não autorizado.", ApiStatusCode.Forbidden);
 
         public static readonly ErrorDetails Invalid =
-            new("INVALID_LOGIN", "Usuário inválido.", ApiStatusCode.Unauthorized);
+            new("INVALID_LOGIN", "Usuário ou Senha inválido.", ApiStatusCode.Unauthorized);
 
         public static readonly ErrorDetails InvalidPassword =
             new("INVALID_PASSWORD", "Senha inválida.", ApiStatusCode.Unauthorized);

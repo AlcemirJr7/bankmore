@@ -3,7 +3,6 @@ using MediatR;
 using Serilog;
 using Tarifa.Application.Errors;
 using Tarifa.Domain.Entities;
-using Tarifa.Domain.Errors;
 using Tarifa.Domain.Repositories;
 
 namespace Tarifa.Application.Features.Tarifar;
@@ -16,9 +15,6 @@ public sealed class TarifarCommandHandler(
     {
         try
         {
-            if (request.Valor <= 0)
-                return ApiResponse.Failure(DomainErrors.Fee.InvalidValue);
-
             var tarifa = new TarifaEntity(request.IdContaCorrete, request.DataMovimento, request.Valor);
 
             var result = await commandRepository.CreateAsync(tarifa, cancellationToken);
