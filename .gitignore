@@ -37,6 +37,8 @@ ScaffoldingReadMe.txt
 *.snupkg
 *.vs
 
+database/
+
 # Others
 ~$*
 *~
