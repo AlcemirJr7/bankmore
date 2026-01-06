@@ -1,7 +1,6 @@
 ﻿using Asp.Versioning;
 using ContaCorrente.Application.Security.Login;
 using Core.Infrastructure.Abstractions;
-using Core.Infrastructure.Extensions;
 using Core.Infrastructure.Idempotencia;
 using Core.Response;
 using MediatR;
@@ -12,21 +11,23 @@ namespace ContaCorrente.Api.Controllers
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
-    public class LoginController(IMediator mediator) : AbstractController
+    public class LoginController(IMediator mediator) : AbstractApiController
     {
         [HttpPost]
         [AllowAnonymous]
         [SkipIdempotency]
         [ProducesResponseType(typeof(ApiResponse<LoginResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
-        public async Task<IResult> Logar(
+        public async Task<IActionResult> Logar(
             LoginRequest request,
             CancellationToken ct)
         {
             var result = await mediator.Send(request, ct);
 
-            return result.Response();
+            return Response(result);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using ContaCorrente.Domain.Models.Inputs;
 using ContaCorrente.Domain.Models.Results;
 using ContaCorrente.Domain.Repositories;
-using Core.Exceptions;
 using Core.Response;
 using Core.Security.Auth;
 using Core.Security.Errors;
@@ -29,7 +28,7 @@ public sealed class LoginCommandHandler(
             conta = await queryRepository.BuscaContaCorrenteAsync(buscaConta, cancellationToken);
 
             if (conta is null)
-                throw new UnauthorizedUserApiException();
+                return ApiResponse.Failure<LoginResponse>(AuthErrors.Login.UnauthorizedUser);
 
             var credenciais = await queryRepository.BuscaCredenciaisPeloIdAsync(conta.IdContaCorrente, cancellationToken);
 
@@ -41,21 +40,11 @@ public sealed class LoginCommandHandler(
             });
 
             if (!auth.IsSuccess)
-                throw new UnauthorizedApiException();
+                return ApiResponse.Failure<LoginResponse>(AuthErrors.Login.Invalid);
 
             var token = jwtTokenGenerator.GenerateToken(conta.IdContaCorrente);
 
             return ApiResponse.Success(new LoginResponse(token));
-        }
-        catch (UnauthorizedUserApiException)
-        {
-            Log.Error("Usuário não autorizado.");
-            throw;
-        }
-        catch (UnauthorizedApiException)
-        {
-            Log.Error("Falha ao autenticar.");
-            throw;
         }
         catch (Exception ex)
         {
