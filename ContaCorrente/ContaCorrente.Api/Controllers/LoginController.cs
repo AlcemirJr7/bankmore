@@ -1,5 +1,4 @@
-﻿using Asp.Versioning;
-using ContaCorrente.Application.Security.Login;
+﻿using ContaCorrente.Application.Security.Login;
 using Core.Infrastructure.Abstractions;
 using Core.Infrastructure.Idempotencia;
 using Core.Response;
@@ -9,8 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ContaCorrente.Api.Controllers
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
     public class LoginController(IMediator mediator) : AbstractApiController
     {
         [HttpPost]

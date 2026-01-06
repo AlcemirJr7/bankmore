@@ -1,11 +1,9 @@
-using Asp.Versioning;
 using ContaCorrente.Application.Features.Commands.Cadastrar;
 using ContaCorrente.Application.Features.Commands.Inativar;
 using ContaCorrente.Application.Features.Commands.Movimentar;
 using ContaCorrente.Application.Features.Queries.ConsultaId;
 using ContaCorrente.Application.Features.Queries.ConsultaSaldo;
 using Core.Infrastructure.Abstractions;
-using Core.Infrastructure.Extensions;
 using Core.Response;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -13,9 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ContaCorrente.API.Controllers
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    public class ContaCorrenteController(IMediator mediator) : AbstractController
+    public class ContaCorrenteController(IMediator mediator) : AbstractApiController
     {
 
         [HttpPost("Cadastrar")]
@@ -24,13 +20,13 @@ namespace ContaCorrente.API.Controllers
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
-        public async Task<IResult> Cadastrar(
+        public async Task<IActionResult> Cadastrar(
             CadastrarRequest request,
             CancellationToken ct)
         {
             var result = await mediator.Send(request, ct);
 
-            return result.Response();
+            return Response(result);
         }
 
         [HttpPost("Inativar")]
@@ -38,13 +34,13 @@ namespace ContaCorrente.API.Controllers
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
-        public async Task<IResult> Inativar(
+        public async Task<IActionResult> Inativar(
             InativarRequest request,
             CancellationToken ct)
         {
             var result = await mediator.Send(request, ct);
 
-            return result.Response();
+            return Response(result);
         }
 
         [HttpPost("Movimentar")]
@@ -52,15 +48,16 @@ namespace ContaCorrente.API.Controllers
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
-        public async Task<IResult> Movimentar(
+        public async Task<IActionResult> Movimentar(
             CriarMovimentoRequest request,
             CancellationToken ct)
         {
-            request.IdContaLogada = GetUserId();
+            request.IdContaLogada = IdContaLogada;
+            request.ChaveIdempotencia = ChaveIdempotencia;
 
             var result = await mediator.Send(request, ct);
 
-            return result.Response();
+            return Response(result);
         }
 
         [HttpGet("ConsultaSaldo")]
@@ -68,15 +65,15 @@ namespace ContaCorrente.API.Controllers
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
-        public async Task<IResult> ConsultaSaldo(CancellationToken ct)
+        public async Task<IActionResult> ConsultaSaldo(CancellationToken ct)
         {
             var result = await mediator.Send(
                 new ConsultaSaldoRequest
                 {
-                    IdContaCorrente = GetUserId()
+                    IdContaCorrente = IdContaLogada
                 }, ct);
 
-            return result.Response();
+            return Response(result);
         }
 
         [HttpGet("ConsultaId")]
@@ -84,11 +81,11 @@ namespace ContaCorrente.API.Controllers
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
-        public async Task<IResult> ConsultaId([FromQuery] ConsultaIdRequest request, CancellationToken ct)
+        public async Task<IActionResult> ConsultaId([FromQuery] ConsultaIdRequest request, CancellationToken ct)
         {
             var result = await mediator.Send(request, ct);
 
-            return result.Response();
+            return Response(result);
         }
     }
 }

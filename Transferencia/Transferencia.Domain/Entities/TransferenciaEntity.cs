@@ -1,11 +1,13 @@
-﻿namespace Transferencia.Domain.Entities;
+﻿using Core.Extensions;
+
+namespace Transferencia.Domain.Entities;
 
 public class TransferenciaEntity
 {
     public string IdTransferencia { get; private set; } = string.Empty;
     public string IdContaCorrenteOrigem { get; private set; } = string.Empty;
     public string IdContaCorrenteDestino { get; private set; } = string.Empty;
-    public DateTime DataMovimento { get; private set; }
+    public string DataMovimento { get; private set; }
     public decimal Valor { get; private set; }
     public string Status { get; private set; } = string.Empty;
 
@@ -14,7 +16,7 @@ public class TransferenciaEntity
         IdTransferencia = Guid.NewGuid().ToString();
         IdContaCorrenteOrigem = idContaCorrenteOrigem;
         IdContaCorrenteDestino = idContaCorrenteDestino;
-        DataMovimento = DateTime.Now;
+        DataMovimento = DateTime.Now.BrStr();
         Valor = valor;
         Status = status;
     }

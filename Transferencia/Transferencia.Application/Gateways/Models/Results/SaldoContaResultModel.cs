@@ -6,6 +6,6 @@ public record SaldoContaResultModel
 {
     public string IdContaCorrente { get; set; } = string.Empty;
     public int Numero { get; set; } = 0;
-    public DateTime DataHoraConsulta { get; set; } = DateTime.Now.Br();
+    public string DataHoraConsulta { get; set; } = DateTime.Now.BrStr();
     public decimal Saldo { get; set; } = 0;
 }

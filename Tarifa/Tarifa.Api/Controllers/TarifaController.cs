@@ -1,6 +1,4 @@
-﻿using Asp.Versioning;
-using Core.Infrastructure.Abstractions;
-using Core.Infrastructure.Extensions;
+﻿using Core.Infrastructure.Abstractions;
 using Core.Infrastructure.Idempotencia;
 using Core.Response;
 using MediatR;
@@ -9,9 +7,7 @@ using Tarifa.Application.Features.Tarifar;
 
 namespace Tarifa.Api.Controllers;
 
-[ApiVersion("1.0")]
-[Route("api/v{version:apiVersion}/[controller]")]
-public class TarifaController(IMediator mediator) : AbstractController
+public class TarifaController(IMediator mediator) : AbstractApiController
 {
     [HttpPost("Tarifar")]
     [SkipIdempotency]
@@ -19,12 +15,12 @@ public class TarifaController(IMediator mediator) : AbstractController
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
-    public async Task<IResult> Tarifar(
+    public async Task<IActionResult> Tarifar(
         TarifarRequest request,
         CancellationToken ct)
     {
         var result = await mediator.Send(request, ct);
 
-        return result.Response();
+        return Response(result);
     }
 }
